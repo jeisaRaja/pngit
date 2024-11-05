@@ -3,12 +3,12 @@ use core::{fmt, str};
 use std::{fmt::Display, str::FromStr};
 
 #[derive(Debug, PartialEq, Eq)]
-struct ChunkType {
+pub struct ChunkType {
     bytes: [u8; 4],
 }
 
 impl TryFrom<[u8; 4]> for ChunkType {
-    type Error = ();
+    type Error = Error;
     fn try_from(value: [u8; 4]) -> Result<Self, Self::Error> {
         Ok(ChunkType { bytes: value })
     }
@@ -35,7 +35,7 @@ impl Display for ChunkType {
 }
 
 impl ChunkType {
-    fn bytes(&self) -> [u8; 4] {
+    pub fn bytes(&self) -> [u8; 4] {
         self.bytes
     }
 
