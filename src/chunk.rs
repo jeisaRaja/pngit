@@ -2,7 +2,7 @@ use crate::{chunk_type::ChunkType, Error};
 use crc::{Crc, CRC_32_ISO_HDLC};
 use std::fmt::Display;
 
-struct Chunk {
+pub struct Chunk {
     length: u32,
     chunk_type: ChunkType,
     data: Vec<u8>,
@@ -63,7 +63,7 @@ impl Display for Chunk {
 }
 
 impl Chunk {
-    fn new(chunk_type: ChunkType, data: Vec<u8>) -> Chunk {
+    pub fn new(chunk_type: ChunkType, data: Vec<u8>) -> Chunk {
         let length: u32 = data.len() as u32;
 
         Chunk {
@@ -74,7 +74,7 @@ impl Chunk {
         }
     }
 
-    fn get_bytes_for_crc(chunk_type: &ChunkType, data: &Vec<u8>) -> Vec<u8> {
+    pub fn get_bytes_for_crc(chunk_type: &ChunkType, data: &Vec<u8>) -> Vec<u8> {
         let mut container = vec![];
         container.extend(chunk_type.bytes());
         container.extend(data);
@@ -82,11 +82,11 @@ impl Chunk {
         container
     }
 
-    fn length(&self) -> u32 {
+    pub fn length(&self) -> u32 {
         self.length
     }
 
-    fn chunk_type(&self) -> &ChunkType {
+    pub fn chunk_type(&self) -> &ChunkType {
         &self.chunk_type
     }
 
@@ -98,11 +98,11 @@ impl Chunk {
         self.crc
     }
 
-    fn data_as_string(&self) -> Result<String, Error> {
+    pub fn data_as_string(&self) -> Result<String, Error> {
         Ok(String::from_utf8(self.data.clone())?)
     }
 
-    fn as_bytes(&self) -> Vec<u8> {
+    pub fn as_bytes(&self) -> Vec<u8> {
         let mut all_bytes = vec![];
         all_bytes.extend(self.length.to_be_bytes());
         all_bytes.extend(self.chunk_type.bytes());
