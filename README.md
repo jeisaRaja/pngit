@@ -45,3 +45,7 @@ Remove a hidden message chunk from a PNG:
 ```bash
 cargo run -- remove --filepath example.png --chunk-type text
 ```
+
+## Acknowledgments
+A special thanks to [jrdngr](https://jrdngr.github.io/pngme_book/) for their excellent work on the PNG message hiding concepts and providing the insightful resources in the **pngme_book**.
+
