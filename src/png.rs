@@ -1,7 +1,7 @@
 use std::fmt::Display;
 
 use crate::{chunk::Chunk, Error};
-struct Png {
+pub struct Png {
     chunks: Vec<Chunk>,
 }
 
@@ -53,15 +53,15 @@ impl Display for Png {
 }
 
 impl Png {
-    fn from_chunks(chunks: Vec<Chunk>) -> Png {
+    pub fn from_chunks(chunks: Vec<Chunk>) -> Png {
         Png { chunks }
     }
 
-    fn append_chunk(&mut self, chunk: Chunk) {
+    pub fn append_chunk(&mut self, chunk: Chunk) {
         self.chunks.push(chunk);
     }
 
-    fn remove_first_chunk(&mut self, chunk_type: &str) -> Result<Chunk, Error> {
+    pub fn remove_first_chunk(&mut self, chunk_type: &str) -> Result<Chunk, Error> {
         let position = self
             .chunks
             .iter()
@@ -77,17 +77,17 @@ impl Png {
         &Png::STANDARD_HEADER
     }
 
-    fn chunks(&self) -> &[Chunk] {
+    pub fn chunks(&self) -> &[Chunk] {
         &self.chunks
     }
 
-    fn chunk_by_type(&self, chunk_type: &str) -> Option<&Chunk> {
+    pub fn chunk_by_type(&self, chunk_type: &str) -> Option<&Chunk> {
         self.chunks()
             .iter()
             .find(|c| c.chunk_type().to_string() == chunk_type)
     }
 
-    fn as_bytes(&self) -> Vec<u8> {
+    pub fn as_bytes(&self) -> Vec<u8> {
         let mut result = vec![];
         result.extend(self.header());
         for chunk in &self.chunks {
